@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { ContactComponent } from './shared/contact/contact.component';
+import { AboutComponent } from './shared/about/about.component';
+import { HomeComponent } from './shared/home/home.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+
+
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'contact', component: ContactComponent},
+  { path: 'about', component: AboutComponent},
+  { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent},
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules
+  })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
